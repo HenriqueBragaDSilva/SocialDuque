@@ -1,14 +1,18 @@
 import 'reflect-metadata'
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
-@Entity('comments')
+@Entity('users')
 export class User{
     @PrimaryGeneratedColumn('uuid')
     id!: string
-    @Column({type:'varchar',length:300})
-   content!:string
     @Column({type:'varchar',length:100})
-    user!:string
+    name!:string
+    @Column({type:'varchar',unique:true})
+    email!:string
+    @Column({type:'varchar',unique:true, length:15})
+    phone!:string
+    @Column({type:'varchar',nullable:false,length:32})
+    password!:string
     @CreateDateColumn()
     created_at!:Date
 }

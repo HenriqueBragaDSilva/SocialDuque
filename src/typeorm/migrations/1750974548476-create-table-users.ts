@@ -1,9 +1,9 @@
 import { MigrationInterface, NoNeedToReleaseEntityManagerError, QueryRunner, Table } from "typeorm";
 
 export class CreateTableUsers1750974548476 implements MigrationInterface {
-
+    
     public async up(queryRunner: QueryRunner): Promise<void> {
-        nner.createTable(new Table({
+        queryRunner.createTable(new Table({
             name: 'users',
             columns:[
                 {name: 'id', type:'varchar', isPrimary:true},
@@ -11,13 +11,11 @@ export class CreateTableUsers1750974548476 implements MigrationInterface {
                 {name: 'email', type:'varchar', isNullable:false, isUnique:true},
                 {name: 'phone', type:'varchar', isNullable:false, isUnique:true},
                 {name: 'password', type:'varchar', isNullable:false},
-                {name: 'created_at', type:'datetime', default:"'CURRENT_TIMESTAMP"}
+                {name: 'created_at', type:'datetime', default:"'CURRENT_TIMESTAMP'"}
             ]
         }))
     }
-
     public async down(queryRunner: QueryRunner): Promise<void> {
         queryRunner.dropTable('users')
     }
-
 }

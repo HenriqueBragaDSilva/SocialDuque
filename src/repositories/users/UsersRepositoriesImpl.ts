@@ -1,33 +1,39 @@
-import { User } from '../../entities/users'
+import { User } from '../../entities/User'
 import { AppDataSource } from '../../data-source'
 import { IUsersRepository } from './IUsersRepositories'
 
 export class UsersRepository implements IUsersRepository{
+    
     private repository = AppDataSource.getRepository(User)
-     
+
     async create(user: User): Promise<User> {
         const newUser = this.repository.create(user)
         return await this.repository.save(newUser)
     }
-
-     async findById(is: string): Promise<User | null> {
-        throw new Error('Method not implemented.')
-    }
-
+    findById(id: string): Promise<User | null> {
+        return this.repository.findOne({where:{id}})
+        }
     findByEmail(email: string): Promise<User | null> {
-        throw new Error('Method not implemented.')
+        return this.repository.findOne({where:{email}})
     }
-
     findByPhone(phone: string): Promise<User | null> {
-        throw new Error('Method not implemented.')
+        return this.repository.findOne({where:{phone}})
+    }
+    async update(id: string, data: Partial<User>): Promise<User> {
+    const user = await this.findById(id)
+    if (!user) {
+        throw new Error('Usuário não encontrado')
     }
 
-    update(id: string, data: Partial<User>): Promise<User> {
-        throw new Error('Method not implemented.')
+    Object.assign(user, data)
+    return await this.repository.save(user)
     }
 
-    delete(id: string): Promise<void> {
-        throw new Error('Method not implemented.')
+    async delete(id: string): Promise<void> {
+        const user = await this.findById(id)
+        if (!user) {
+            throw new Error('Usuário não encontrado')
+        }
+        await this.repository.remove(user)
     }
-    
 }

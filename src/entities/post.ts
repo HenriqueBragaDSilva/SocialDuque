@@ -8,7 +8,7 @@ export class User{
     @Column({type:'varchar',length:300})
    content!:string
     @CreateDateColumn()
-    create_at!:Date
+    created_at!:Date
     @Column({type:'varchar',length:100})
     user!:string
     @Column({type:'varchar',length:300})

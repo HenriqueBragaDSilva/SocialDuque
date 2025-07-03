@@ -11,7 +11,7 @@ export const envSchema = z.object({
 const _env = envSchema.safeParse(process.env)
 
 if(! _env.success){
-    console.error('Variável de ambiente inválida.', _env.error.format())
+    console.error('Variável de ambiente inválida', _env.error.format())
     process.exit(1)
 }
 
