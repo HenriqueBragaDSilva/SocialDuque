@@ -1,7 +1,11 @@
-import { IUsersRepository } from '../../repositories/users/IUsersRepositories'
-import { CreateUserInput, createUserSchema } from '../../schemas/user-schemas'
-import { hash } from 'bcryptjs'
-import { v4 as uuidv4 } from 'uuid'
-import { User } from '../../entities/User'
+import { IUsersRepository } from "../../repositories/users/UsersRepositoriesImpl"
 
-export class DeleteUserUseCase{}
+export class DeleteUserUseCase {
+    constructor(private usersRepository: IUsersRepository){}
+
+    async execute(id: string): Promise<void> {
+        const user = await this.usersRepository.findById(id)
+        if (!user) throw new Error ('Usuário não encontrado')
+        await this.usersRepository.delete(id)
+    }
+}

@@ -1,5 +1,7 @@
 import 'reflect-metadata'
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {Post} from './Post'
+import {Comment} from './Comment'
 
 @Entity('users')
 export class User{
@@ -15,4 +17,8 @@ export class User{
     password!:string
     @CreateDateColumn()
     created_at!:Date
+    @OneToMany(() => Post, post => post.author)
+    posts!: Post[]
+    @OneToMany(() => Comment, comment => comment.author)
+    comments!: Comment[]
 }

@@ -1,5 +1,7 @@
+import 'reflect-metadata'
 import Fastify from "fastify"
 import { AppDataSource } from "./data-source"
+import { usersRoutes } from "./routes/user-routes"
 
 export async function startApp(){
     const app = Fastify()
@@ -13,6 +15,6 @@ export async function startApp(){
     })
 
     //registre as rotas e plugins aqui
-    //app.register(usersRoutes)
+    app.register(usersRoutes)
     return app
 }

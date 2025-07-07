@@ -1,7 +1,12 @@
-import { IUsersRepository } from '../../repositories/users/IUsersRepositories'
-import { CreateUserInput, createUserSchema } from '../../schemas/user-schemas'
-import { hash } from 'bcryptjs'
-import { v4 as uuidv4 } from 'uuid'
+import { IUsersRepository } from '../../repositories/users/UsersRepositoriesImpl'
 import { User } from '../../entities/User'
+export class FindUserByIdUseCase{
+    constructor(private usersRepository: IUsersRepository){}
 
-export class FindByIdUseCase{}
+    async execute(id: string): Promise<Omit<User, 'password'>>{
+        const user = await this.usersRepository.findById(id)
+        if(!user) throw new Error('Usuário não encontrado')
+        const {password, ...safeUser} = user
+    return safeUser
+    }
+}
